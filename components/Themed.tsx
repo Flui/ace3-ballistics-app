@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { Text as DefaultText, View as DefaultView, Button as DefaultButton } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -23,8 +23,16 @@ type ThemeProps = {
   darkColor?: string;
 };
 
+export type ButtonProps = ThemeProps & DefaultButton['props'];
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
+
+export function Button(props: ButtonProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+
+  return <DefaultButton style={[{ color }, style]} {...otherProps} />;
+}
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
